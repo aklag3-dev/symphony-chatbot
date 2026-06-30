@@ -10,6 +10,6 @@
     "secret": "wrangler secret put GEMINI_API_KEY"
   },
   "devDependencies": {
-    "wrangler": "^3.95.0"
+    "wrangler": "^4.106.0"
   }
 }
