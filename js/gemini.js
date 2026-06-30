@@ -5,7 +5,7 @@ window.SymphonyGemini = (function () {
   // Set this to the URL printed by `wrangler deploy` (e.g.
   // "https://symphony-chatbot-proxy.<account>.workers.dev").
   // Leave empty to disable the LLM fallback (rule-based only).
-  const PROXY_URL = ''; // <-- set after deploying the worker
+  const PROXY_URL = 'https://symphony-chatbot-proxy.symphony-driver-assist.workers.dev';
 
   const FALLBACK_HTML = "<p>I'm having trouble reaching the AI service right now. I can still help with charging, handovers, reimbursements, and emergencies — what do you need?</p>";
 
