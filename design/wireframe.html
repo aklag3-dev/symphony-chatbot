@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Symphony Driver Assist — Wireframe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1A1F2E;
+      --ink-2: #3D4250;
+      --muted: #5A5E68;
+      --surface: #FAF7F2;
+      --surface-2: #F0EBE1;
+      --border: #E5E0D6;
+      --primary: #0E5C5A;
+      --primary-ink: #FFFFFF;
+      --accent: #E8A33D;
+      --danger: #B0432A;
+      --success: #2E7D5C;
+      --focus: #1A1F2E;
+
+      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --font-display: 'Fraunces', Georgia, 'Times New Roman', Times, serif;
+
+      --r-1: 6px; --r-2: 10px; --r-3: 18px; --r-4: 24px;
+      --shadow-1: 0 1px 2px rgba(26,31,46,0.04), 0 1px 3px rgba(26,31,46,0.06);
+      --shadow-2: 0 8px 24px rgba(26,31,46,0.10);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: #ECE7DA;
+      min-height: 100vh;
+      padding: 28px 16px 48px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page-label {
+      max-width: 420px;
+      margin: 0 auto 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .app {
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: var(--r-4);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+      min-height: 760px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- Header ---------- */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand .mark { display: block; flex-shrink: 0; }
+    .brand .text { display: flex; flex-direction: column; }
+    .brand .wordmark {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .brand .tagline {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      border-radius: var(--r-2);
+      color: var(--ink);
+      cursor: pointer;
+      position: relative;
+    }
+    .icon-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .icon-btn .dot {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 1.5px solid var(--surface);
+    }
+
+    /* ---------- Thread ---------- */
+    .thread {
+      flex: 1;
+      padding: 20px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .date-sep {
+      align-self: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      background: var(--surface-2);
+      border-radius: 999px;
+      margin: 0 0 4px;
+    }
+    .msg {
+      display: flex;
+      gap: 8px;
+      max-width: 88%;
+    }
+    .msg.bot { align-self: flex-start; }
+    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--primary-ink);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    .bubble {
+      padding: 10px 14px;
+      border-radius: 20px;
+      font-size: 15px;
+      line-height: 1.45;
+      position: relative;
+    }
+    .bubble p { margin: 0; }
+    .bubble p + p { margin-top: 8px; }
+    .bubble ol { margin: 8px 0 0; padding-left: 20px; }
+    .bubble ol li { margin: 2px 0; }
+    .bubble .time {
+      display: block;
+      font-size: 11px;
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+    .bubble strong { font-weight: 600; }
+    .msg.bot .bubble {
+      background: var(--surface-2);
+      color: var(--ink);
+      border-bottom-left-radius: var(--r-1);
+    }
+    .msg.bot .bubble .time { color: var(--muted); }
+    .msg.user .bubble {
+      background: var(--primary);
+      color: var(--primary-ink);
+      border-bottom-right-radius: var(--r-1);
+    }
+    .msg.user .bubble .time { color: rgba(255,255,255,0.75); }
+
+    /* Loading dots */
+    .bubble.loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 14px 16px;
+    }
+    .bubble.loading .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+    .bubble.loading .dot:nth-child(2) { animation-delay: 0.15s; }
+    .bubble.loading .dot:nth-child(3) { animation-delay: 0.30s; }
+    @keyframes pulse {
+      0%, 60%, 100% { opacity: 0.3; transform: scale(0.85); }
+      30% { opacity: 1; transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bubble.loading .dot { animation: none; }
+    }
+
+    /* Chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 2px 0 2px 40px;
+    }
+    .chips.user-flow { padding-left: 0; justify-content: flex-end; }
+    .chip {
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      font: 500 14px/1 var(--font-body);
+      cursor: pointer;
+      transition: background 150ms;
+    }
+    .chip:hover { background: rgba(14,92,90,0.06); }
+    .chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    /* Inline error state */
+    .error-card {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      background: rgba(176,67,42,0.06);
+      border: 1px solid rgba(176,67,42,0.22);
+      border-radius: var(--r-2);
+      color: var(--danger);
+      max-width: 88%;
+      align-self: flex-start;
+    }
+    .error-card .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--danger);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .error-card .body { font-size: 14px; line-height: 1.4; color: var(--ink); }
+    .error-card .retry {
+      margin-top: 8px;
+      background: transparent;
+      border: 0;
+      color: var(--primary);
+      font: 600 14px var(--font-body);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      padding: 0;
+    }
+    .error-card .retry:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+
+    /* ---------- Composer ---------- */
+    .composer {
+      display: flex;
+      gap: 8px;
+      padding: 12px 12px 12px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .composer input {
+      flex: 1;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface-2);
+      font: 400 15px/1.4 var(--font-body);
+      color: var(--ink);
+    }
+    .composer input::placeholder { color: var(--muted); }
+    .composer input:focus {
+      outline: 2px solid var(--focus);
+      outline-offset: 1px;
+      border-color: var(--primary);
+    }
+    .send-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--primary-ink);
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .send-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    /* ---------- Settings panel (demo) ---------- */
+    .panel-demo {
+      max-width: 420px;
+      margin: 32px auto 0;
+      background: var(--surface);
+      border-radius: var(--r-4);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+    }
+    .panel-demo-head {
+      padding: 14px 20px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .settings {
+      padding: 22px 20px 24px;
+    }
+    .settings-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .settings h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    .settings .lead {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .field .help {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 8px 0 0;
+      line-height: 1.45;
+    }
+    .field .help a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .key-input { display: flex; gap: 8px; }
+    .key-input input {
+      flex: 1;
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: var(--r-2);
+      border: 1.5px solid var(--border);
+      background: var(--surface-2);
+      font: 500 14px/1.2 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .key-input input:focus { outline: 2px solid var(--focus); outline-offset: 1px; border-color: var(--primary); }
+    .key-input .icon-btn { border: 1.5px solid var(--border); background: var(--surface); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: var(--r-2);
+      border: 0;
+      font: 600 14px/1 var(--font-body);
+      cursor: pointer;
+    }
+    .btn.primary { background: var(--primary); color: var(--primary-ink); width: 100%; }
+    .btn.secondary { background: var(--surface-2); color: var(--ink); }
+    .btn.danger { color: var(--danger); border-left: 3px solid var(--danger); }
+    .btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    .saved-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--success);
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .saved-badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .fingerprint {
+      font: 500 13px ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .settings-foot {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="page-label">App · Populated thread</p>
+
+  <div class="app" role="application" aria-label="Symphony Driver Assist">
+
+    <header class="app-header">
+      <div class="brand">
+        <svg class="mark" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#0E5C5A"/>
+          <path d="M8 12 Q16 6 24 12 T24 20" stroke="#FAF7F2" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="text">
+          <span class="wordmark">Symphony Fleet</span>
+          <span class="tagline">Driver Assist</span>
+        </div>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Open settings">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span class="dot" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <main class="thread" aria-live="polite" aria-atomic="false">
+
+      <div class="date-sep" aria-hidden="true">Today · 14:24</div>
+
+      <div class="msg bot">
+        <div class="avatar" aria-hidden="true">S</div>
+        <div class="bubble">
+          <p>Hi, I'm Symphony Assist. I'm here to help with your shift. What do you need?</p>
+          <time class="time" datetime="14:24">14:24</time>
+        </div>
+      </div>
+
+      <div class="chips" role="group" aria-label="Suggested questions">
+        <button class="chip" type="button">How do I charge my vehicle?</button>
+        <button class="chip" type="button">What if my van breaks down?</button>
+        <button class="chip" type="button">How do I log a delivery?</button>
+        <button class="chip" type="button">Mileage reimbursement</button>
+        <button class="chip" type="button">Where can I find my route?</button>
+      </div>
+
+      <div class="msg user">
+        <div class="bubble">
+          <p>How do I charge my vehicle?</p>
+          <time class="time" datetime="14:25">14:25</time>
+        </div>
+      </div>
+
+      <div class="msg bot">
+        <div class="avatar" aria-hidden="true">S</div>
+        <div class="bubble">
+          <p>You can charge at any of our 80+ partner stations across London. Open the driver app and tap <strong>Routes</strong> to find the nearest one, or say "find a charger near me" and I'll help.</p>
+          <time class="time" datetime="14:25">14:25</time>
+        </div>
+      </div>
+
+      <div class="chips" role="group" aria-label="Suggested follow-ups">
+        <button class="chip" type="button">Find a charger near me</button>
+        <button class="chip" type="button">What if charging fails?</button>
+        <button class="chip" type="button">Different question</button>
+      </div>
+
+      <div class="msg user">
+        <div class="bubble">
+          <p>find a charger near me</p>
+          <time class="time" datetime="14:26">14:26</time>
+        </div>
+      </div>
+
+      <div class="msg bot">
+        <div class="avatar" aria-hidden="true">S</div>
+        <div class="bubble">
+          <p>I don't have live location access. To find the nearest charger:</p>
+          <ol>
+            <li>Open the driver app and tap <strong>Routes</strong>.</li>
+            <li>The map shows your closest partner stations with live availability.</li>
+            <li>Tap a station for directions.</li>
+          </ol>
+          <p style="margin-top:8px">If the app isn't showing stations, restart it and try again. If it still fails, call dispatch on <strong>0800-SYMPHONY</strong>.</p>
+          <time class="time" datetime="14:26">14:26</time>
+        </div>
+      </div>
+
+      <div class="msg bot" aria-label="Symphony Assist is typing">
+        <div class="avatar" aria-hidden="true">S</div>
+        <div class="bubble loading" role="status" aria-label="Symphony Assist is typing">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+
+      <div class="error-card" role="alert">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div>
+          <span class="label">Something went wrong</span>
+          <div class="body">I couldn't reach the service just now. Your message is saved.</div>
+          <button class="retry" type="button">Try again</button>
+        </div>
+      </div>
+
+    </main>
+
+    <form class="composer" onsubmit="return false;" aria-label="Send a message">
+      <label class="sr-only" for="msg">Type a message</label>
+      <input id="msg" type="text" placeholder="Ask anything about your shift…" autocomplete="off" spellcheck="true">
+      <button class="send-btn" type="submit" aria-label="Send message">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2" fill="currentColor" stroke="none"/>
+        </svg>
+      </button>
+    </form>
+
+  </div>
+
+  <p class="page-label" style="margin-top:40px">Settings panel · Open state</p>
+
+  <div class="panel-demo">
+    <div class="panel-demo-head">Demo · what the user sees when the gear is tapped</div>
+    <div class="settings" role="dialog" aria-labelledby="settings-title">
+      <div class="settings-head">
+        <h2 id="settings-title">Settings</h2>
+        <button class="icon-btn" type="button" aria-label="Close settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <p class="lead">Symphony Assist runs on Google's Gemini 2.5 Flash. Add your own API key — it's stored only in this browser.</p>
+
+      <div class="field">
+        <label for="api-key">Gemini API key</label>
+        <div class="key-input">
+          <input id="api-key" type="password" value="AIzaSyD-x7QkP3mN2vR8tL4wH9bY0aZcF6eG1dE" autocomplete="off" spellcheck="false">
+          <button class="icon-btn" type="button" aria-label="Show API key">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <p class="help">Get a key from <a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a> — sign in and create one under API Keys.</p>
+      </div>
+
+      <button class="btn primary" type="button">
+        Save
+        <span class="saved-badge" aria-hidden="true">Saved</span>
+      </button>
+
+      <div class="field" style="margin-top:24px">
+        <label>Stored key</label>
+        <div class="fingerprint">AIza…dE</div>
+        <p class="help">The full key is held only in this browser. It never leaves your device.</p>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn secondary" type="button">Reveal</button>
+          <button class="btn secondary danger" type="button">Clear stored key</button>
+        </div>
+      </div>
+
+      <div class="settings-foot">
+        Symphony Driver Assist v1.0 · Built for Symphony Fleet
+      </div>
+    </div>
+  </div>
+
+  <p class="page-label" style="margin-top:40px;max-width:420px;text-align:center">
+    Static reference · No JavaScript · Maker to wire behaviour from this
+  </p>
+
+</body>
+</html>
