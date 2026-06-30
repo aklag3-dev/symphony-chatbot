@@ -1,0 +1,9 @@
+name = "symphony-chatbot-proxy"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Secrets (set via: wrangler secret put GEMINI_API_KEY)
+# GEMINI_API_KEY is stored as an encrypted secret binding, never in source
+
+[observability]
+enabled = true

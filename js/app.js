@@ -5,7 +5,6 @@ window.SymphonyApp = (function () {
   const state = {
     history: [],
     sending: false,
-    lastUserText: '',
     settingsOpen: false,
     lastFocused: null
   };
@@ -17,7 +16,6 @@ window.SymphonyApp = (function () {
     bindHeader();
     bindComposer();
     bindSettings();
-    updateGeminiIndicator();
     renderWelcome();
   }
 
@@ -27,18 +25,10 @@ window.SymphonyApp = (function () {
     els.composerForm = $('composer-form');
     els.sendBtn = $('send-btn');
     els.gearBtn = $('gear-btn');
-    els.gearDot = $('gear-dot');
     els.settingsOverlay = $('settings-overlay');
     els.settingsPanel = $('settings-panel');
     els.closeSettingsBtn = $('close-settings-btn');
-    els.apiKeyInput = $('api-key-input');
-    els.showKeyBtn = $('show-key-btn');
-    els.saveKeyBtn = $('save-key-btn');
-    els.savedBadge = $('saved-badge');
-    els.manageSection = $('manage-section');
-    els.fingerprint = $('fingerprint');
-    els.revealBtn = $('reveal-btn');
-    els.clearKeyBtn = $('clear-key-btn');
+    els.statusLine = $('status-line');
   }
 
   function bindHeader() {
@@ -68,61 +58,9 @@ window.SymphonyApp = (function () {
     els.settingsOverlay.addEventListener('click', function (e) {
       if (e.target === els.settingsOverlay) closeSettings();
     });
-    els.showKeyBtn.addEventListener('click', function () {
-      const isPassword = els.apiKeyInput.type === 'password';
-      els.apiKeyInput.type = isPassword ? 'text' : 'password';
-      els.showKeyBtn.setAttribute('aria-label', isPassword ? 'Hide API key' : 'Show API key');
-    });
-    els.saveKeyBtn.addEventListener('click', function () {
-      const value = els.apiKeyInput.value.trim();
-      window.SymphonyGemini.setKey(value);
-      hideSavedBadge();
-      requestAnimationFrame(function () { showSavedBadge(); });
-      updateGeminiIndicator();
-      renderManageSection();
-    });
-    els.revealBtn.addEventListener('click', function () {
-      const key = window.SymphonyGemini.getKey();
-      if (!key) return;
-      els.apiKeyInput.value = key;
-      els.apiKeyInput.type = 'text';
-      els.showKeyBtn.setAttribute('aria-label', 'Hide API key');
-    });
-    els.clearKeyBtn.addEventListener('click', function () {
-      window.SymphonyGemini.clearKey();
-      els.apiKeyInput.value = '';
-      els.apiKeyInput.type = 'password';
-      hideSavedBadge();
-      updateGeminiIndicator();
-      renderManageSection();
-    });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && state.settingsOpen) closeSettings();
     });
-  }
-
-  function showSavedBadge() {
-    els.savedBadge.classList.add('visible');
-  }
-  function hideSavedBadge() {
-    els.savedBadge.classList.remove('visible');
-  }
-
-  function updateGeminiIndicator() {
-    if (window.SymphonyGemini.isConfigured()) {
-      els.gearDot.style.display = 'none';
-    } else {
-      els.gearDot.style.display = '';
-    }
-  }
-
-  function renderManageSection() {
-    if (window.SymphonyGemini.isConfigured()) {
-      els.manageSection.style.display = '';
-      els.fingerprint.textContent = window.SymphonyGemini.fingerprint();
-    } else {
-      els.manageSection.style.display = 'none';
-    }
   }
 
   function openSettings() {
@@ -130,18 +68,13 @@ window.SymphonyApp = (function () {
     state.lastFocused = document.activeElement;
     const app = document.querySelector('.app');
     if (app) app.setAttribute('inert', '');
-    renderManageSection();
-    if (window.SymphonyGemini.isConfigured()) {
-      els.apiKeyInput.value = '';
-      els.apiKeyInput.placeholder = 'Paste a new key to replace';
-    } else {
-      els.apiKeyInput.value = '';
-      els.apiKeyInput.placeholder = 'AIza…';
+    if (els.statusLine) {
+      els.statusLine.textContent = window.SymphonyGemini.statusLabel();
     }
     els.settingsOverlay.classList.add('open');
     els.settingsOverlay.setAttribute('aria-hidden', 'false');
     requestAnimationFrame(function () {
-      els.apiKeyInput.focus();
+      els.closeSettingsBtn.focus();
     });
   }
 
@@ -292,7 +225,6 @@ window.SymphonyApp = (function () {
     if (!text) return;
 
     state.sending = true;
-    state.lastUserText = text;
     els.composerInput.value = '';
     els.sendBtn.disabled = true;
     els.sendBtn.style.opacity = '0.5';
